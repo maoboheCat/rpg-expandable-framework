@@ -1,0 +1,33 @@
+package com.cola.rpc.config;
+
+import lombok.Data;
+
+/**
+ * RPC 配置文件
+ * 设置一些默认配置
+ * @author Maobohe
+ * @createData 2024/3/19 16:06
+ */
+@Data
+public class RpcConfig {
+
+    /**
+     * 名称
+     */
+    private String name = "rpc-easy";
+
+    /**
+     * 版本号
+     */
+    private String version = "1.0";
+
+    /**
+     * 服务器主机名
+     */
+    private String serverHost = "localhost";
+
+    /**
+     * 服务器端口号
+     */
+    private Integer serverPort = 8080;
+}
