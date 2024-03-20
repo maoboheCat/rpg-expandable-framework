@@ -144,11 +144,13 @@ d
 .src/main/java/com/cola/rpc/RpcApplication.java,2\c\2c33e6638cda4bc8be36ebfa109c494a3b931db0
 j
 :example-consumer/src/main/resources/application.properties,2\b\2bf15741b366c2e3ce6228fe2be3ed63a3c1d36c
-T
-$src/main/java/com/cola/rpc/main.java,d\1\d15cb77ed3eca810781667cb0496a38343db0d79
 }
 Mexample-consumer/src/main/java/com/cola/example/consumer/ConsumerExample.java,d\9\d925492e469fccfee0a80c011f87616622be1cd4
 j
 :example-provider/src/main/resources/application.properties,5\3\531d17081728f96e2f86b2cfbab8e6dd59d3671b
 ’
 bexample-consumer/.idea/sonarlint/securityhotspotstore/a/7/a79398cbc2a5e9c5bd05db03b39086adbf78070d,7\c\7cb785e5c224b0c3a9c2fc13a2c82cdc881c6f0f
+f
+6src/main/java/com/cola/rpc/proxy/MockServiceProxy.java,1\a\1a355e2bdb5eea9f2541fedb2f8da896e3e5ea6d
+L
+src/test/java/FakerTest.java,5\c\5c77a0b6e869487f644efa6333dfc13fbf6ba8ee
