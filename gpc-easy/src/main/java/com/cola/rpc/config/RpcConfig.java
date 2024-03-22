@@ -1,5 +1,6 @@
 package com.cola.rpc.config;
 
+import com.cola.rpc.serializer.SerializerKey;
 import lombok.Data;
 
 /**
@@ -35,4 +36,9 @@ public class RpcConfig {
      * 模拟调用
      */
     private boolean mock = false;
+
+    /**
+     * 序列化器
+     */
+    private String serializer = SerializerKey.JDK;
 }

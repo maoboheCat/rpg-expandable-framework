@@ -1,0 +1,4 @@
+jdk=com.cola.rpc.serializer.JdkSerializer
+json=com.cola.rpc.serializer.JsonSerializer
+kryo=com.cola.rpc.serializer.KryoSerializer
+hessian=com.cola.rpc.serializer.HessianSerializer

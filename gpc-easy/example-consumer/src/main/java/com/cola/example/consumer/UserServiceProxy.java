@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * 静态代理
+ *
  * @author Maobohe
  * @createData 2024/3/19 10:43
  */
@@ -26,15 +27,15 @@ public class UserServiceProxy implements UserService {
         RpcRequest rpcRequest = RpcRequest.builder()
                 .serviceName(UserService.class.getName())
                 .methodName("getUser")
-                .parameterTypes(new Class[] {User.class})
-                .args(new Object[] {user})
+                .parameterTypes(new Class[]{User.class})
+                .args(new Object[]{user})
                 .build();
         try {
             byte[] bodyBytes = serializer.serialize(rpcRequest);
             byte[] result;
             try (HttpResponse httpResponse = HttpRequest.post("http://localhost:8080")
-                            .body(bodyBytes)
-                            .execute()) {
+                    .body(bodyBytes)
+                    .execute()) {
                 result = httpResponse.bodyBytes();
             }
             RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
