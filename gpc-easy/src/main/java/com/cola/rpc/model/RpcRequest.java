@@ -1,5 +1,6 @@
 package com.cola.rpc.model;
 
+import com.cola.rpc.constant.RpcConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 public class RpcRequest implements Serializable {
 
     private static final long serialVersionUID = 7810934857448258168L;
+
     /**
      * 服务名称
      */
@@ -28,6 +30,11 @@ public class RpcRequest implements Serializable {
      * 方法名称
      */
     private String methodName;
+
+    /**
+     * 服务版本
+     */
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
 
     /**
      * 参数类型列表

@@ -1,7 +1,10 @@
 package com.cola.rpc;
 
+import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
+import com.cola.rpc.registry.Regisrty;
+import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +26,11 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig) {
         rpcConfig = newRpcConfig;
         log.info("------> rpc init, config = {}", newRpcConfig.toString());
+        // 注册中心初始化
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Regisrty regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
+        regisrty.init(registryConfig);
+        log.info("------> registry init, config = {}", registryConfig);
     }
 
     /**

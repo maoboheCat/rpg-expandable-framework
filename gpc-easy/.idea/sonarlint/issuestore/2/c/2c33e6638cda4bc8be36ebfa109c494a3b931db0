@@ -1,0 +1,9 @@
+
+w
+java:S1104"UMake rpcConfig a static final constant or non-public and provide accessors if needed.( ‚Ö¬ıÿÿÿÿ8±îÚæ1
+Q
+java:S1444"/Make this "public static rpcConfig" field final( ‚Ö¬ıÿÿÿÿ8²îÚæ1
+W
+java:S1118":Add a private constructor to hide the implicit public one.(š¨É8ÀîÚæ1
+y
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.( ‚Ö¬ıÿÿÿÿ8ÀîÚæ1
