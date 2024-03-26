@@ -168,8 +168,6 @@ e
 5src/main/java/com/cola/rpc/registry/EtcdRegistry.java,7\d\7d09dbbf15820952e11110870ad92db0f6145a9f
 e
 5src/main/java/com/cola/rpc/config/RegistryConfig.java,a\6\a60a05050a988a8d5b302a1d38a95eda3f8cc6e3
-a
-1src/main/java/com/cola/rpc/registry/Regisrty.java,3\d\3d58dcfc42e9c49244fc68cd05b3e75d632f86b8
 e
 5src/main/java/com/cola/rpc/registry/RegistryKeys.java,b\5\b545ed1e40aeba9e235348d31cd43d93d56cc699
 h
@@ -316,8 +314,6 @@ w
 G.idea/sonarlint/issuestore/9/d/9d69b1adf8324cfb312dbb1d50b5f31366852a98,9\d\9d11c76b835286c0cdfe0345c959079294db3f97
 w
 G.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0,f\0\f0e0f9cec86fe4b939ae22be5264c758801eb28f
-Å
-Q.idea/sonarlint/securityhotspotstore/3/d/3d58dcfc42e9c49244fc68cd05b3e75d632f86b8,a\9\a9559b716e3b2bc20fa087131b9fae210ef615ad
 w
 G.idea/sonarlint/issuestore/9/6/961a2a584b7ef4b796ef21d8cc60aa89fdab123b,d\6\d63b7bb33bcd961711893c841536362136d8f3f0
 w
@@ -440,3 +436,9 @@ Q.idea/sonarlint/securityhotspotstore/c/e/ce954d6fa26f12507e7e93e42b308f65a9e859
 Q.idea/sonarlint/securityhotspotstore/6/d/6dcb1799fa0f2e7f0fbc6026b9c98c32f48eaae1,9\5\95de12edb662dddcbf1017e4e10e7b5cda58a85a
 Å
 Q.idea/sonarlint/securityhotspotstore/3/1/31f4e80717812b25fa162d379f9c54920f88c623,7\e\7e5e03536ab2f73c91d7e5645079650b9f70aead
+a
+1src/main/java/com/cola/rpc/registry/Registry.java,e\e\eec41dc25390757bf401c9b8944c2af49e47b193
+m
+=src/main/java/com/cola/rpc/registry/RegistryServiceCache.java,0\b\0b17686c36ac9153dada6abe9ceca9d64433d670
+j
+:src/main/java/com/cola/rpc/registry/ZookeeperRegistry.java,5\5\55d75317600c1a3d545dbb27f2c1541149e47a3b

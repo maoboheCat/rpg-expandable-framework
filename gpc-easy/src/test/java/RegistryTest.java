@@ -1,7 +1,7 @@
 import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.model.ServiceMetaInfo;
 import com.cola.rpc.registry.EtcdRegistry;
-import com.cola.rpc.registry.Regisrty;
+import com.cola.rpc.registry.Registry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +14,7 @@ import java.util.List;
  * @createData 2024/3/23 21:17
  */
 public class RegistryTest {
-
-    final Regisrty registry = new EtcdRegistry();
+    final Registry registry = new EtcdRegistry();
 
     @Before
     public void init() {
@@ -44,6 +43,7 @@ public class RegistryTest {
         serviceMetaInfo.setServiceHost("localhost");
         serviceMetaInfo.setServicePort(1234);
         registry.register(serviceMetaInfo);
+        Thread.sleep(30 * 1000L);
     }
 
     @Test
@@ -66,5 +66,12 @@ public class RegistryTest {
         Assert.assertNotNull(serviceMetaInfoList);
     }
 
+    @Test
+    public void heartBeat() throws Exception {
+        // init 方法中已经执行心跳检测了
+        register();
+        // 阻塞 1 分钟
+        Thread.sleep(60 * 1000L);
+    }
 
 }

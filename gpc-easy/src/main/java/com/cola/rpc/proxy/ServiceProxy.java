@@ -9,7 +9,7 @@ import com.cola.rpc.constant.RpcConstant;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.model.ServiceMetaInfo;
-import com.cola.rpc.registry.Regisrty;
+import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.serializer.Serializer;
 import com.cola.rpc.serializer.SerializerFactory;
@@ -52,18 +52,17 @@ public class ServiceProxy implements InvocationHandler {
             // 序列化
             byte[] bodyBytes = serializer.serialize(rpcRequest);
             // 从注册中心获取服务提供者地址
-            Regisrty regisrty = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
+            Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
             ServiceMetaInfo serviceMateInfo = new ServiceMetaInfo();
             serviceMateInfo.setServiceName(serviceName);
             serviceMateInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
-            List<ServiceMetaInfo> serviceMateInfoList = regisrty.serviceDiscovery(serviceMateInfo.getServiceKey());
+            List<ServiceMetaInfo> serviceMateInfoList = registry.serviceDiscovery(serviceMateInfo.getServiceKey());
             if (CollUtil.isEmpty(serviceMateInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
             // todo 暂时先取第一个
             ServiceMetaInfo selectedServiceMateInfo = serviceMateInfoList.get(0);
             // 发送请求
-            // todo 地址被硬编码（使用注册中心和服务发现机制解决）
             try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMateInfo.getServiceAddress())
                     .body(bodyBytes)
                     .execute()) {

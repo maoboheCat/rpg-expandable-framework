@@ -10,7 +10,7 @@ import java.util.List;
  * @author Maobohe
  * @createData 2024/3/23 11:30
  */
-public interface Regisrty {
+public interface Registry {
 
     /**
      * 初始化
@@ -39,7 +39,18 @@ public interface Regisrty {
     List<ServiceMetaInfo> serviceDiscovery(String serviceKey);
 
     /**
-     * 服务销毁
+     * 服务销毁（服务端）
      */
     void destroy();
+
+    /**
+     * 心跳检测（服务端）
+     */
+    void heartBeat();
+
+    /**
+     * 监听（服务端）
+     * @param serviceNodeKey
+     */
+    void watch(String serviceNodeKey);
 }

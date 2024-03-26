@@ -6,7 +6,7 @@ import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.model.ServiceMetaInfo;
 import com.cola.rpc.registry.LocalRegistry;
-import com.cola.rpc.registry.Regisrty;
+import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.server.HttpServer;
 import com.cola.rpc.server.VertxHttpServer;
@@ -27,7 +27,7 @@ public class ProvideExample {
         // 注册服务到注册中心
         RpcConfig rpcConfig = RpcApplication.getRpcConfig();
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
-        Regisrty regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
+        Registry regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName(serviceName);
         serviceMetaInfo.setServiceHost(rpcConfig.getServerHost());

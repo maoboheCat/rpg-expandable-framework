@@ -3,7 +3,7 @@ package com.cola.rpc;
 import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
-import com.cola.rpc.registry.Regisrty;
+import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +28,11 @@ public class RpcApplication {
         log.info("------> rpc init, config = {}", newRpcConfig.toString());
         // 注册中心初始化
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
-        Regisrty regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
+        Registry regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
         regisrty.init(registryConfig);
         log.info("------> registry init, config = {}", registryConfig);
+        // 创建并注册Shutdown Hook，JVM 退出时执行操作
+        Runtime.getRuntime().addShutdownHook(new Thread(regisrty::destroy));
     }
 
     /**
