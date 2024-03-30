@@ -1,5 +1,7 @@
 
 G	java:S106"+Replace this use of System.out by a logger.(×ÑèŠ8’ïåå1
+P
+java:S18746"3Remove this use of "newInstance"; it is deprecated.(¨òÏ¶8†·¬•è1
 9
 java:S1116Q"Remove this empty statement.(¾×ıÓ8†€èå1
 ^

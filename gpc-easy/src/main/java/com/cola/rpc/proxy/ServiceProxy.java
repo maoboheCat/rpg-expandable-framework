@@ -1,6 +1,7 @@
 package com.cola.rpc.proxy;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.cola.rpc.RpcApplication;
@@ -9,21 +10,30 @@ import com.cola.rpc.constant.RpcConstant;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.model.ServiceMetaInfo;
+import com.cola.rpc.protocol.*;
 import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.serializer.Serializer;
 import com.cola.rpc.serializer.SerializerFactory;
+import com.cola.rpc.server.tcp.VertxTcpClient;
+import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.net.NetClient;
+import io.vertx.core.net.NetSocket;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 服务代理（JDK 动态代理）
  * @author Maobohe
  * @createData 2024/3/19 11:11
  */
+@Slf4j
 public class ServiceProxy implements InvocationHandler {
 
     /**
@@ -62,16 +72,11 @@ public class ServiceProxy implements InvocationHandler {
             }
             // todo 暂时先取第一个
             ServiceMetaInfo selectedServiceMateInfo = serviceMateInfoList.get(0);
-            // 发送请求
-            try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMateInfo.getServiceAddress())
-                    .body(bodyBytes)
-                    .execute()) {
-                byte[] result = httpResponse.bodyBytes();
-                // 反序列化
-                RpcResponse rpcResponse = serializer.deserialize(result, RpcResponse.class);
-                return rpcResponse.getData();
-            }
-        } catch (IOException e) {
+            // 发送TCP请求
+            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMateInfo);
+            return rpcResponse.getData();
+        } catch (IOException | RuntimeException e) {
+            log.info("VertxTcpClient 请求失败");
             e.printStackTrace();
         }
         return null;

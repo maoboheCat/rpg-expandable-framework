@@ -1,4 +1,8 @@
 
-g	java:S112="FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8éæ¿Ûæ1
+g	java:S112G"FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8Û“ÿÒè1
+_
+java:S1854?"=Remove this useless assignment to local variable "bodyBytes".(¨ù«„úÿÿÿÿ8æ“ÿÒè1
+P
+java:S1481?".Remove this unused "bodyBytes" local variable.(¨ù«„úÿÿÿÿ8ò“ÿÒè1
 O
-java:S1135?"2Complete the task associated to this TODO comment.(×—ü¡8øëÀÛæ1
+java:S1135I"2Complete the task associated to this TODO comment.(×—ü¡8€”ÿÒè1

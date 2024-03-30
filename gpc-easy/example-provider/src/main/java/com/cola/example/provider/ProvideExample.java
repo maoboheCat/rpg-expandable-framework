@@ -10,6 +10,7 @@ import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
 import com.cola.rpc.server.HttpServer;
 import com.cola.rpc.server.VertxHttpServer;
+import com.cola.rpc.server.tcp.VertxTcpServer;
 
 /**
  * @author Maobohe
@@ -37,7 +38,7 @@ public class ProvideExample {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(rpcConfig.getServerPort());
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(rpcConfig.getServerPort());
     }
 }
