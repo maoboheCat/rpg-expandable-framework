@@ -7,6 +7,8 @@ import cn.hutool.http.HttpResponse;
 import com.cola.rpc.RpcApplication;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
+import com.cola.rpc.fault.retry.RetryStrategy;
+import com.cola.rpc.fault.retry.RetryStrategyFactory;
 import com.cola.rpc.loadbalancer.LoadBalancer;
 import com.cola.rpc.loadbalancer.LoadBalancerFactory;
 import com.cola.rpc.model.RpcRequest;
@@ -63,8 +65,6 @@ public class ServiceProxy implements InvocationHandler {
                 .args(args)
                 .build();
         try {
-            // 序列化
-            byte[] bodyBytes = serializer.serialize(rpcRequest);
             // 从注册中心获取服务提供者地址
             Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
             ServiceMetaInfo serviceMateInfo = new ServiceMetaInfo();
@@ -81,7 +81,11 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMateInfo = loadBalancer.select(requestParams, serviceMateInfoList);
             // 发送TCP请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMateInfo);
+            // 使用重试机制
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+            RpcResponse rpcResponse = retryStrategy.doRetry(() ->
+                VertxTcpClient.doRequest(rpcRequest, selectedServiceMateInfo)
+            );
             return rpcResponse.getData();
         } catch (IOException | RuntimeException e) {
             log.info("VertxTcpClient 请求失败");

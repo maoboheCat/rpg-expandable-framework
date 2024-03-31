@@ -486,3 +486,17 @@ u
 Esrc/main/java/com/cola/rpc/loadbalancer/WeightRandomLoadBalancer.java,a\d\ad798347521fc9fd19f0e809ee4fb1d56be15265
 y
 Isrc/main/java/com/cola/rpc/loadbalancer/WeightRoundRobinLoadBalancer.java,3\4\34f191c72f7b35f52d6c71e45d0eac2c36640f4a
+i
+9src/main/java/com/cola/rpc/fault/retry/RetryStrategy.java,7\8\78d1c36b15611feca51b531b0afdf8e3b0a86dd0
+k
+;src/main/java/com/cola/rpc/fault/retry/NoRetryStrategy.java,0\6\068413f2ccdc3b757d3625a9ddb75009effea79e
+v
+Fsrc/main/java/com/cola/rpc/fault/retry/FixedIntervalRetryStrategy.java,c\c\ccd38e7cc89f898e769a77daca931a976b4afa2c
+`
+0src/test/java/fault/retry/RetryStrategyTest.java,a\4\a40defa0de4061e2f613432b79622f383e5f5249
+\
+,src/test/java/fault/retry/RetryStrategy.java,2\1\21609933866d692e5e10a72997447e8e1470a534
+l
+<src/main/java/com/cola/rpc/fault/retry/RetryStrategyKey.java,7\b\7bf07013b44be27b13cb3a434c6461d4101dd376
+p
+@src/main/java/com/cola/rpc/fault/retry/RetryStrategyFactory.java,f\3\f39054244ee38a33fc1a7d72c1732fba512b5586

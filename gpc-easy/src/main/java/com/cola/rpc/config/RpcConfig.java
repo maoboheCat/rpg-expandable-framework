@@ -1,5 +1,6 @@
 package com.cola.rpc.config;
 
+import com.cola.rpc.fault.retry.RetryStrategyKey;
 import com.cola.rpc.loadbalancer.LoadBalancerKey;
 import com.cola.rpc.serializer.SerializerKey;
 import lombok.Data;
@@ -51,5 +52,10 @@ public class RpcConfig {
     /**
      * 负载均衡器
      */
-    private String loadBalancer =LoadBalancerKey.ROUND_ROBIN;
+    private String loadBalancer = LoadBalancerKey.ROUND_ROBIN;
+
+    /**
+     * 重试策略
+     */
+    private String retryStrategy = RetryStrategyKey.NO;
 }

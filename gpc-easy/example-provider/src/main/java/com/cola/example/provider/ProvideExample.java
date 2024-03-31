@@ -8,8 +8,6 @@ import com.cola.rpc.model.ServiceMetaInfo;
 import com.cola.rpc.registry.LocalRegistry;
 import com.cola.rpc.registry.Registry;
 import com.cola.rpc.registry.RegistryFactory;
-import com.cola.rpc.server.HttpServer;
-import com.cola.rpc.server.VertxHttpServer;
 import com.cola.rpc.server.tcp.VertxTcpServer;
 
 /**

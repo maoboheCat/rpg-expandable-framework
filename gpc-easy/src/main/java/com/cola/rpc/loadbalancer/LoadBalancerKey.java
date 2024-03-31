@@ -27,6 +27,9 @@ public interface LoadBalancerKey {
      */
     String WEIGHT_RANDOM = "weightRandom";
 
+    /**
+     * 加权轮询
+     */
     String WEIGHT_ROUND_ROBIN = "weightRoundRobin";
 
 }

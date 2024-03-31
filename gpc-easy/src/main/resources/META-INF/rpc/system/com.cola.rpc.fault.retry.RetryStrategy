@@ -1,0 +1,2 @@
+no=com.cola.rpc.fault.retry.NoRetryStrategy
+fixedInterval=com.cola.rpc.fault.retry.FixedIntervalRetryStrategy
