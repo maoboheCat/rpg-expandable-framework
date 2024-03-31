@@ -1,0 +1,5 @@
+roundRobin=com.cola.rpc.loadbalancer.RoundRobinLoadBalancer
+random=com.cola.rpc.loadbalancer.RandomLoadBalancer
+consistentHash=com.cola.rpc.loadbalancer.ConsistentHashLoadBalancer
+weightRandom=com.cola.rpc.loadbalancer.WeightRandomLoadBalancer
+weightRoundRobin=com.cola.rpc.loadbalancer.WeightRoundRobinLoadBalancer

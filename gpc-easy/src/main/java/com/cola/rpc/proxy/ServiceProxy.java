@@ -7,6 +7,8 @@ import cn.hutool.http.HttpResponse;
 import com.cola.rpc.RpcApplication;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
+import com.cola.rpc.loadbalancer.LoadBalancer;
+import com.cola.rpc.loadbalancer.LoadBalancerFactory;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.model.ServiceMetaInfo;
@@ -25,7 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -70,8 +74,12 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMateInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            // todo 暂时先取第一个
-            ServiceMetaInfo selectedServiceMateInfo = serviceMateInfoList.get(0);
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            // 将调用方法名作为负载均衡参数
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("methodName", rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMateInfo = loadBalancer.select(requestParams, serviceMateInfoList);
             // 发送TCP请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMateInfo);
             return rpcResponse.getData();

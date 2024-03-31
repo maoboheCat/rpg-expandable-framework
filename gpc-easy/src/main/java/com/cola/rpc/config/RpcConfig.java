@@ -1,5 +1,6 @@
 package com.cola.rpc.config;
 
+import com.cola.rpc.loadbalancer.LoadBalancerKey;
 import com.cola.rpc.serializer.SerializerKey;
 import lombok.Data;
 
@@ -46,4 +47,9 @@ public class RpcConfig {
      * 注册中心配置
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+
+    /**
+     * 负载均衡器
+     */
+    private String loadBalancer =LoadBalancerKey.ROUND_ROBIN;
 }

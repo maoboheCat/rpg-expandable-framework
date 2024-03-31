@@ -38,6 +38,11 @@ public class ServiceMetaInfo {
     private String serviceGroup = "default";
 
     /**
+     * 服务器权重值
+     */
+    private Integer weight = 1;
+
+    /**
      * 获取服务键名
      * @return
      */
