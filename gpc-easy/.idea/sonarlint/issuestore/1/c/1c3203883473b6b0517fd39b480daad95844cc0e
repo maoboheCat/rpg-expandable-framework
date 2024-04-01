@@ -1,6 +1,2 @@
 
-g	java:S112K"FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8ÑŒ¶£é1
-[
-java:S1854;">Remove this useless assignment to local variable "serializer".(Áí–¢8Õô¸£é1
-L
-java:S1481;"/Remove this unused "serializer" local variable.(Áí–¢8Úô¸£é1
+g	java:S112L"FDefine and throw a dedicated exception instead of using a generic one.(ÒÀ•ˆüÿÿÿÿ8É§ÖÌé1

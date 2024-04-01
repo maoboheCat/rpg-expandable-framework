@@ -1,6 +1,7 @@
 package com.cola.rpc.config;
 
 import com.cola.rpc.fault.retry.RetryStrategyKey;
+import com.cola.rpc.fault.tolerant.TolerantStrategyJKey;
 import com.cola.rpc.loadbalancer.LoadBalancerKey;
 import com.cola.rpc.serializer.SerializerKey;
 import lombok.Data;
@@ -58,4 +59,9 @@ public class RpcConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKey.NO;
+
+    /**
+     * 容错策略
+     */
+    private String tolerantStrategy = TolerantStrategyJKey.FAIL_FAST;
 }

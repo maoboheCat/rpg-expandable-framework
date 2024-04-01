@@ -9,6 +9,8 @@ import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
 import com.cola.rpc.fault.retry.RetryStrategy;
 import com.cola.rpc.fault.retry.RetryStrategyFactory;
+import com.cola.rpc.fault.tolerant.TolerantStrategy;
+import com.cola.rpc.fault.tolerant.TolerantStrategyFactory;
 import com.cola.rpc.loadbalancer.LoadBalancer;
 import com.cola.rpc.loadbalancer.LoadBalancerFactory;
 import com.cola.rpc.model.RpcRequest;
@@ -56,7 +58,6 @@ public class ServiceProxy implements InvocationHandler {
         // 指定序列化器
         RpcConfig rpcConfig = RpcApplication.getRpcConfig();
         String serviceName = method.getDeclaringClass().getName();
-        final Serializer serializer = SerializerFactory.getInstance(rpcConfig.getSerializer());
         // 构造请求
         RpcRequest rpcRequest = RpcRequest.builder()
                 .serviceName(serviceName)
@@ -88,8 +89,10 @@ public class ServiceProxy implements InvocationHandler {
             );
             return rpcResponse.getData();
         } catch (IOException | RuntimeException e) {
-            log.info("VertxTcpClient 请求失败");
-            e.printStackTrace();
+            log.error("------> VertxTcpClient 请求失败");
+            log.info("------> 容错机制处理中...");
+            TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+            tolerantStrategy.doTolerant(null, e);
         }
         return null;
     }
