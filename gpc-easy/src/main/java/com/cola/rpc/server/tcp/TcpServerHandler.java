@@ -1,5 +1,7 @@
 package com.cola.rpc.server.tcp;
 
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.protocol.*;
@@ -10,6 +12,8 @@ import io.vertx.core.net.NetSocket;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+
+import static com.cola.rpc.exception.ErrorCode.PROTOCOL_DECODER_ERROR;
 
 /**
  * Tcp 请求处理
@@ -26,7 +30,7 @@ public class TcpServerHandler implements Handler<NetSocket> {
             try {
                 protocolMessage = (ProtocolMessage<RpcRequest>) ProtocolMessageDecoder.decode(buffer);
             } catch (IOException e) {
-                throw new RuntimeException("协议消息解码错误");
+                throw new RpcException(PROTOCOL_DECODER_ERROR);
             }
             RpcRequest rpcRequest = protocolMessage.getBody();
             // 处理请求
@@ -45,7 +49,7 @@ public class TcpServerHandler implements Handler<NetSocket> {
                     netSocket.write(encode);
                     return;
                 } catch (IOException e) {
-                    throw new RuntimeException("协议信息编码失败");
+                    throw new RpcException(ErrorCode.PROTOCOL_ENCODE_ERROR);
                 }
             }
             // 请求不为空
@@ -69,7 +73,7 @@ public class TcpServerHandler implements Handler<NetSocket> {
                 Buffer encode = ProtocolMessageEncoder.encode(rpcResponseProtocolMessage);
                 netSocket.write(encode);
             } catch (IOException e) {
-                throw new RuntimeException("协议信息编码失败");
+                throw new RpcException(ErrorCode.PROTOCOL_ENCODE_ERROR);
             }
         });
         netSocket.handler(bufferHandlerWrapper);

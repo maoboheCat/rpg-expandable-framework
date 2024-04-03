@@ -1,5 +1,7 @@
 package com.cola.rpc.protocol;
 
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.serializer.Serializer;
@@ -20,7 +22,7 @@ public class ProtocolMessageDecoder {
         ProtocolMessage.Header header = new ProtocolMessage.Header();
         byte magic = buffer.getByte(0);
         if (magic != ProtocolConstant.PROTOCOL_MAGIC) {
-            throw new RuntimeException("消息magic 非法");
+            throw new RpcException(ErrorCode.PROTOCOL_ILLEGAL_ERROR, "消息magic 非法");
 
         }
         header.setMagic(magic);
@@ -37,12 +39,12 @@ public class ProtocolMessageDecoder {
         // 解析消息体
         ProtocolMessageSerializerEnum serializerEnum = ProtocolMessageSerializerEnum.getEnumByKey(header.getSerializer());
         if (serializerEnum == null) {
-            throw new RuntimeException("序列化消息的协议不存在");
+            throw new RpcException(ErrorCode.PROTOCOL_ILLEGAL_ERROR, "序列化消息的协议不存在");
         }
         Serializer serializer = SerializerFactory.getInstance(serializerEnum.getValue());
         ProtocolMessageTypeEnum messageTypeEnum = ProtocolMessageTypeEnum.getEnumByKey(header.getType());
         if (messageTypeEnum == null) {
-            throw new RuntimeException("序列化消息的类型不存在");
+            throw new RpcException(ErrorCode.PROTOCOL_ILLEGAL_ERROR, "序列化消息的类型不存在");
         }
         switch (messageTypeEnum) {
             case REQUEST:
@@ -54,7 +56,7 @@ public class ProtocolMessageDecoder {
             case HEART_BEAT:
             case OTHERS:
             default:
-                throw new RuntimeException("暂不支持此消息类型 " + messageTypeEnum);
+                throw new RpcException(ErrorCode.PROTOCOL_ILLEGAL_ERROR, "暂不支持此消息类型 " + messageTypeEnum);
         }
     }
 }

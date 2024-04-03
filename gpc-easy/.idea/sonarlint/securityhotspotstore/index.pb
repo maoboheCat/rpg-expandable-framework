@@ -552,3 +552,7 @@ vexample-springboot-provider/src/main/java/com/cola/examplespringbootprovider/Ex
 dexample-springboot-consumer/src/main/java/com/cola/examplespringbootconsumer/ExampleServiceImpl.java,a\7\a738820e3fce85f707314466ab16d6ee4996478d
 S
 #example-springboot-consumer/pom.xml,2\3\237e315896a55e375dc3913e6e9034ca69d63e1e
+c
+3src/main/java/com/cola/rpc/exception/ErrorCode.java,1\a\1a831646e6843b8c6a1ffee32d71233424178963
+f
+6src/main/java/com/cola/rpc/exception/RpcException.java,b\3\b3e2918056c7b3c0244fc1a4cf0e245ad1599433

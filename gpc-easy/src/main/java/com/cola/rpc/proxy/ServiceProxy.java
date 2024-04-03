@@ -7,6 +7,8 @@ import cn.hutool.http.HttpResponse;
 import com.cola.rpc.RpcApplication;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.fault.retry.RetryStrategy;
 import com.cola.rpc.fault.retry.RetryStrategyFactory;
 import com.cola.rpc.fault.tolerant.TolerantStrategy;
@@ -73,7 +75,7 @@ public class ServiceProxy implements InvocationHandler {
             serviceMateInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
             List<ServiceMetaInfo> serviceMateInfoList = registry.serviceDiscovery(serviceMateInfo.getServiceKey());
             if (CollUtil.isEmpty(serviceMateInfoList)) {
-                throw new RuntimeException("暂无服务地址");
+                throw new RpcException(ErrorCode.PROXY_FAILED_ERROR, "暂无服务地址");
             }
             // 负载均衡
             LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());

@@ -1,5 +1,7 @@
 package com.cola.rpc.protocol;
 
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.serializer.Serializer;
 import com.cola.rpc.serializer.SerializerFactory;
 import io.vertx.core.buffer.Buffer;
@@ -36,7 +38,7 @@ public class ProtocolMessageEncoder {
         // 获取序列化器
         ProtocolMessageSerializerEnum serializerEnum = ProtocolMessageSerializerEnum.getEnumByKey(header.getSerializer());
         if (serializerEnum == null) {
-            throw new RuntimeException("序列化协议不存在");
+            throw new RpcException(ErrorCode.SERIALIZER_ILLEGAL_ERROR, "序列化协议不存在");
         }
         Serializer serializer = SerializerFactory.getInstance(serializerEnum.getValue());
         byte[] bodyBytes = serializer.serialize(protocolMessge.getBody());

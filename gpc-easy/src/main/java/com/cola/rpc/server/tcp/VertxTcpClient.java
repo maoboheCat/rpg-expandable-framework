@@ -2,6 +2,8 @@ package com.cola.rpc.server.tcp;
 
 import cn.hutool.core.util.IdUtil;
 import com.cola.rpc.RpcApplication;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.model.ServiceMetaInfo;
@@ -24,6 +26,8 @@ import java.util.concurrent.ExecutionException;
  */
 @Slf4j
 public class VertxTcpClient {
+
+    private static Buffer encode;
 
     public static RpcResponse doRequest(RpcRequest rpcRequest, ServiceMetaInfo serviceMetaInfo) throws ExecutionException, InterruptedException {
         Vertx vertx = Vertx.vertx();
@@ -53,7 +57,7 @@ public class VertxTcpClient {
                 Buffer encode = ProtocolMessageEncoder.encode(protocolMessage);
                 socket.write(encode);
             } catch (IOException e) {
-                throw new RuntimeException("协议消息编码错误");
+                throw new RpcException(ErrorCode.PROTOCOL_ENCODE_ERROR, "协议编码错误");
             }
 
             // 接收响应
@@ -62,7 +66,7 @@ public class VertxTcpClient {
                     ProtocolMessage<RpcResponse> rpcResponseProtocolMessage = (ProtocolMessage<RpcResponse>) ProtocolMessageDecoder.decode(buffer);
                     responseFuture.complete(rpcResponseProtocolMessage.getBody());
                 } catch (IOException e) {
-                    throw new RuntimeException("协议消息解码错误");
+                    throw new RpcException(ErrorCode.PROTOCOL_ENCODE_ERROR);
                 }
             });
             socket.handler(bufferHandlerWrapper);

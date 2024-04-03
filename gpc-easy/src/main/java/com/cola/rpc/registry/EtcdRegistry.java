@@ -6,6 +6,8 @@ import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
 import cn.hutool.json.JSONUtil;
 import com.cola.rpc.config.RegistryConfig;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.ServiceMetaInfo;
 import io.etcd.jetcd.*;
 import io.etcd.jetcd.options.GetOption;
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+
+import static com.cola.rpc.exception.ErrorCode.REGISTRY_DISCOVERY_ERROR;
 
 /**
  * etcd 注册中心
@@ -111,7 +115,7 @@ public class EtcdRegistry implements Registry {
             registryServiceCache.writeCache(serviceMetaInfoList);
             return serviceMetaInfoList;
         } catch (Exception e) {
-            throw new RuntimeException("获取列表失败", e);
+            throw new RpcException(REGISTRY_DISCOVERY_ERROR, "获取列表失败 "+ e);
         }
     }
 
@@ -123,7 +127,7 @@ public class EtcdRegistry implements Registry {
             try {
                 kvClient.delete(ByteSequence.from(key, StandardCharsets.UTF_8)).get();
             } catch (Exception e) {
-                throw new RuntimeException(key + "节点下线失败");
+                throw new RpcException(ErrorCode.REGISTRY_DESTROY_ERROR, key + "节点下线失败");
             }
         }
         // 释放资源
@@ -155,7 +159,7 @@ public class EtcdRegistry implements Registry {
                         ServiceMetaInfo serviceMetaInfo = JSONUtil.toBean(value, ServiceMetaInfo.class);
                         register(serviceMetaInfo);
                     } catch (Exception e) {
-                        throw new RuntimeException(key + "续约失败" + e);
+                        throw new RpcException(ErrorCode.REGISTRY_OTHER_ERROR, key + "续约失败" + e);
                     }
                 }
             }

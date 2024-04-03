@@ -1,6 +1,8 @@
 package com.cola.rpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.serializer.Serializer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,10 +74,10 @@ public class SpiLoader {
         String tClassName = tClass.getName();
         Map<String, Class<?>> keyClassMap = loaderMap.get(tClassName);
         if (keyClassMap == null) {
-            throw new RuntimeException(String.format("SpiLoader 未加载 %s 类型", tClassName));
+            throw new RpcException(ErrorCode.SPI_LOAD_ERROR, String.format("SpiLoader 未加载 %s 类型", tClassName));
         }
         if (!keyClassMap.containsKey(key)) {
-            throw new RuntimeException(String.format("SpiLoader 的 %s 不存在 key=%s 的类型", tClassName, key));
+            throw new RpcException(ErrorCode.SPI_LOAD_ERROR, String.format("SpiLoader 的 %s 不存在 key=%s 的类型", tClassName, key));
         }
         // 获取到要加载的实现类型
         Class<?> implClass = keyClassMap.get(key);
@@ -86,7 +88,7 @@ public class SpiLoader {
                 instanceCache.put(implClassName, implClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 String errorMsg = String.format("%s 类实例化失败", implClassName);
-                throw new RuntimeException(errorMsg, e);
+                throw new RpcException(ErrorCode.SPI_LOAD_ERROR, errorMsg);
             }
         }
         return (T) instanceCache.get(implClassName);

@@ -3,6 +3,8 @@ package com.cola.rpc.bootstrap;
 import com.cola.rpc.RpcApplication;
 import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.config.RpcConfig;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.ServiceMetaInfo;
 import com.cola.rpc.model.ServiceRegisterInfo;
 import com.cola.rpc.registry.LocalRegistry;
@@ -40,7 +42,7 @@ public class ProviderBootstrap {
             try {
                 registry.register(serviceMetaInfo);
             } catch (Exception e) {
-                throw new RuntimeException(serviceName + "服务注册失败,", e);
+                throw new RpcException(ErrorCode.REGISTRY_REGISTER_ERROR);
             }
         }
         // 启动服务

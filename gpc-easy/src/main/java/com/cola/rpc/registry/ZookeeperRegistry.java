@@ -1,6 +1,8 @@
 package com.cola.rpc.registry;
 
 import com.cola.rpc.config.RegistryConfig;
+import com.cola.rpc.exception.ErrorCode;
+import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.ServiceMetaInfo;
 import io.vertx.core.impl.ConcurrentHashSet;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +72,7 @@ public class ZookeeperRegistry implements Registry {
             client.start();
             serviceDiscovery.start();
         } catch (Exception e) {
-            throw new RuntimeException("Zookeeper init error" + e);
+            throw new RpcException(ErrorCode.REGISTRY_OTHER_ERROR, "Zookeeper init error" + e);
         }
     }
 
@@ -88,7 +90,7 @@ public class ZookeeperRegistry implements Registry {
         try {
             serviceDiscovery.unregisterService(buildServiceInstance(serviceMateInfo));
         } catch (Exception e) {
-            throw new RuntimeException("Zookeeper unRegister error" + e);
+            throw new RpcException(ErrorCode.REGISTRY_OTHER_ERROR, "Zookeeper unRegister error" + e);
         }
         // 从本地缓存移除
         String registerKey = ZK_ROOT_PATH + "/" + serviceMateInfo.getServiceNodeKey();
@@ -113,7 +115,7 @@ public class ZookeeperRegistry implements Registry {
             registryServiceCache.writeCache(serviceMetaInfoList);
             return serviceMetaInfoList;
         } catch (Exception e) {
-            throw new RuntimeException("获取服务列表失败", e);
+            throw new RpcException(ErrorCode.REGISTRY_DISCOVERY_ERROR, "获取服务列表失败 " + e);
         }
     }
 
@@ -124,7 +126,7 @@ public class ZookeeperRegistry implements Registry {
            try {
                client.delete().guaranteed().forPath(key);
            } catch (Exception e) {
-               throw new RuntimeException(key + "节点下线失败");
+               throw new RpcException(ErrorCode.REGISTRY_DESTROY_ERROR, key + "节点下线失败");
            }
        }
        // 释放资源
@@ -164,7 +166,7 @@ public class ZookeeperRegistry implements Registry {
                     .payload(serviceMetaInfo)
                     .build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RpcException(ErrorCode.REGISTRY_REGISTER_ERROR);
         }
     }
 }
