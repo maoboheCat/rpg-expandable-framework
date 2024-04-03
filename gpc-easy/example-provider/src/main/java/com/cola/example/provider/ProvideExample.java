@@ -1,14 +1,11 @@
 package com.cola.example.provider;
 
 import com.cola.example.common.service.UserService;
-import com.cola.rpc.RpcApplication;
-import com.cola.rpc.config.RegistryConfig;
-import com.cola.rpc.config.RpcConfig;
-import com.cola.rpc.model.ServiceMetaInfo;
-import com.cola.rpc.registry.LocalRegistry;
-import com.cola.rpc.registry.Registry;
-import com.cola.rpc.registry.RegistryFactory;
-import com.cola.rpc.server.tcp.VertxTcpServer;
+import com.cola.rpc.bootstrap.ProviderBootstrap;
+import com.cola.rpc.model.ServiceRegisterInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Maobohe
@@ -17,26 +14,9 @@ import com.cola.rpc.server.tcp.VertxTcpServer;
 public class ProvideExample {
 
     public static void main(String[] args) {
-        RpcApplication.init();
-
-        // 注册服务
-        String serviceName = UserService.class.getName();
-        LocalRegistry.register(serviceName, UserServiceImpl.class);
-
-        // 注册服务到注册中心
-        RpcConfig rpcConfig = RpcApplication.getRpcConfig();
-        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
-        Registry regisrty = RegistryFactory.getInstance(registryConfig.getRegistry());
-        ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
-        serviceMetaInfo.setServiceName(serviceName);
-        serviceMetaInfo.setServiceHost(rpcConfig.getServerHost());
-        serviceMetaInfo.setServicePort(rpcConfig.getServerPort());
-        try {
-            regisrty.register(serviceMetaInfo);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        VertxTcpServer vertxTcpServer = new VertxTcpServer();
-        vertxTcpServer.doStart(rpcConfig.getServerPort());
+        List<ServiceRegisterInfo<?>> serviceRegisterInfoList = new ArrayList<>();
+        ServiceRegisterInfo<?> serviceRegisterInfo = new ServiceRegisterInfo<>(UserService.class.getName(), UserServiceImpl.class);
+        serviceRegisterInfoList.add(serviceRegisterInfo);
+        ProviderBootstrap.init(serviceRegisterInfoList);
     }
 }
