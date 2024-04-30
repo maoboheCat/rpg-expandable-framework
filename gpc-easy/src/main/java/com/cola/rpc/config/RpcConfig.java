@@ -63,5 +63,5 @@ public class RpcConfig {
     /**
      * 容错策略
      */
-    private String tolerantStrategy = TolerantStrategyJKey.FAIL_FAST;
+    private String tolerantStrategy = TolerantStrategyJKey.FAIL_BACK;
 }

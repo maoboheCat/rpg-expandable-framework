@@ -29,6 +29,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetClient;
 import io.vertx.core.net.NetSocket;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
@@ -94,8 +95,15 @@ public class ServiceProxy implements InvocationHandler {
             log.error("------> VertxTcpClient 请求失败");
             log.info("------> 容错机制处理中...");
             TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
-            tolerantStrategy.doTolerant(null, e);
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("serviceName", rpcRequest.getServiceName());
+            requestParams.put("methodName", rpcRequest.getMethodName());
+            RpcResponse rpcResponse = tolerantStrategy.doTolerant(requestParams, e);
+            if (rpcResponse != null) {
+                return rpcResponse.getData();
+            }
         }
+        System.out.println("进入最终处理");
         return null;
     }
 }

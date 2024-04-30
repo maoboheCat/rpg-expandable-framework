@@ -4,3 +4,5 @@ java:S1604"(Make this anonymous inner class a lambda(œ¥Ô½ùÿÿÿÿ8ÁÈŸê1
 ^
 java:S10758"ARefactor your code to get this URI from a customizable parameter.(»À´¹8ñÈŸê1
 L	java:S106|"+Replace this use of System.out by a logger.(õÉ¹ãıÿÿÿÿ8ÿÈŸê1
+a
+java:S1128"DRemove this unused import 'java.util.concurrent.ExecutionException'.(¡£ØÍ8£ú¤ò1
