@@ -14,29 +14,32 @@ public class RegistryServiceCache {
     /**
      * 服务缓存
      */
-    List<ServiceMetaInfo> serviceCache;
+     Map<String, List<ServiceMetaInfo>> serviceCache = new ConcurrentHashMap<>();
 
     /**
      * 写缓存
+     * @param serviceKey
      * @param newServiceCache
      */
-    void writeCache(List<ServiceMetaInfo> newServiceCache) {
-        this.serviceCache = newServiceCache;
+    void writeCache(String serviceKey, List<ServiceMetaInfo> newServiceCache) {
+        this.serviceCache.put(serviceKey, newServiceCache);
     }
 
     /**
      * 读缓存
+     * @param serviceKey
      * @return
      */
-    List<ServiceMetaInfo> readCache() {
-        return this.serviceCache;
+    List<ServiceMetaInfo> readCache(String serviceKey) {
+        return this.serviceCache.get(serviceKey);
     }
 
     /**
      * 清空缓存
+     * @param serviceKey
      */
-    void clearCache() {
-        this.serviceCache = null;
+    void clearCache(String serviceKey) {
+        this.serviceCache.remove(serviceKey);
     }
 
 }
