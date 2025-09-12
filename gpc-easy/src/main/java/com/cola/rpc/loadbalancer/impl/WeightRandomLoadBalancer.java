@@ -1,11 +1,11 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.impl;
 
+import com.cola.rpc.loadbalancer.LoadBalancer;
 import com.cola.rpc.model.ServiceMetaInfo;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 加权随机法

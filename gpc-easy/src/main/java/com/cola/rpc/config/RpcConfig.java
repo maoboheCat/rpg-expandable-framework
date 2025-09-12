@@ -2,7 +2,7 @@ package com.cola.rpc.config;
 
 import com.cola.rpc.fault.retry.RetryStrategyKey;
 import com.cola.rpc.fault.tolerant.TolerantStrategyJKey;
-import com.cola.rpc.loadbalancer.LoadBalancerKey;
+import com.cola.rpc.loadbalancer.constant.LoadBalancerKey;
 import com.cola.rpc.serializer.SerializerKey;
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.constant;
 
 /**
  * 负载均衡器键名常量

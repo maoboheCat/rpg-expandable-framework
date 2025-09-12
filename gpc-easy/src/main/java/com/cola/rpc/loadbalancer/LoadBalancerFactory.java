@@ -1,5 +1,6 @@
 package com.cola.rpc.loadbalancer;
 
+import com.cola.rpc.loadbalancer.impl.RoundRobinLoadBalancer;
 import com.cola.rpc.spi.SpiLoader;
 
 /**

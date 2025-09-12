@@ -1,7 +1,10 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.impl;
 
+import com.cola.rpc.loadbalancer.LoadBalancer;
+import com.cola.rpc.loadbalancer.cache.RoundRobinStateCache;
 import com.cola.rpc.model.ServiceMetaInfo;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,9 +14,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Maobohe
  * @createData 2024/3/31 12:19
  */
-public class WeightRoundRobinLoadBalancer implements LoadBalancer{
+public class WeightRoundRobinLoadBalancer implements LoadBalancer {
 
-    private final AtomicInteger currentIndex = new AtomicInteger();
+    private final RoundRobinStateCache stateCache = new RoundRobinStateCache();
 
     /**
      * 服务器权重总和
@@ -35,14 +38,17 @@ public class WeightRoundRobinLoadBalancer implements LoadBalancer{
                 totalWeight += serviceMetaInfo.getWeight();
             }
         }
+        // 获取下一个轮询索引
+        int index = stateCache.getNextIndex(serviceMetaInfoList.get(0).getServiceKey(), totalWeight);
         // 获取调用服务器
-        while (true) {
-            int index = currentIndex.getAndIncrement() % size;
-            int weight = serviceMetaInfoList.get(index).getWeight();
-            if (weight >= totalWeight) {
-                return serviceMetaInfoList.get(index);
+        int weightSum = 0;
+        for (ServiceMetaInfo service : serviceMetaInfoList) {
+            weightSum += service.getWeight();
+            if (index < weightSum) {
+                return service;
             }
-            totalWeight -= weight;
         }
+        // 保底
+        return serviceMetaInfoList.get(0);
     }
 }

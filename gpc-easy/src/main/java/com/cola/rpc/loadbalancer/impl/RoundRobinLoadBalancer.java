@@ -1,5 +1,7 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.impl;
 
+import com.cola.rpc.loadbalancer.LoadBalancer;
+import com.cola.rpc.loadbalancer.cache.RoundRobinStateCache;
 import com.cola.rpc.model.ServiceMetaInfo;
 
 import java.util.List;
@@ -11,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Maobohe
  * @createData 2024/3/30 16:16
  */
-public class RoundRobinLoadBalancer implements LoadBalancer{
+public class RoundRobinLoadBalancer implements LoadBalancer {
 
-    private final AtomicInteger currentIndex = new AtomicInteger();
+    private final RoundRobinStateCache stateCache = new RoundRobinStateCache();
 
     @Override
     public ServiceMetaInfo select(Map<String, Object> requestParams, List<ServiceMetaInfo> serviceMetaInfoList) {
@@ -25,7 +27,8 @@ public class RoundRobinLoadBalancer implements LoadBalancer{
         if (size == 1) {
             return serviceMetaInfoList.get(0);
         }
-        int index = currentIndex.getAndIncrement() % size;
+        String serviceKey = serviceMetaInfoList.get(0).getServiceKey();
+        int index = stateCache.getNextIndex(serviceKey, size);
         return serviceMetaInfoList.get(index);
     }
 }

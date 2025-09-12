@@ -3,6 +3,8 @@ package com.cola.rpc.registry;
 import com.cola.rpc.model.ServiceMetaInfo;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 注册中心本地缓存

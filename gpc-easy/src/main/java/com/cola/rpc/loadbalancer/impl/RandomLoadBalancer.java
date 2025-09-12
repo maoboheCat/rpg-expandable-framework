@@ -1,5 +1,6 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.impl;
 
+import com.cola.rpc.loadbalancer.LoadBalancer;
 import com.cola.rpc.model.ServiceMetaInfo;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Random;
  * @author Maobohe
  * @createData 2024/3/30 16:34
  */
-public class RandomLoadBalancer implements LoadBalancer{
+public class RandomLoadBalancer implements LoadBalancer {
 
     private final Random random = new Random();
 

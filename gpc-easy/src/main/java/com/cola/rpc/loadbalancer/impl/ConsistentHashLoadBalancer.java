@@ -1,6 +1,6 @@
-package com.cola.rpc.loadbalancer;
+package com.cola.rpc.loadbalancer.impl;
 
-import cn.hutool.crypto.SecureUtil;
+import com.cola.rpc.loadbalancer.LoadBalancer;
 import com.cola.rpc.model.ServiceMetaInfo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import java.util.TreeMap;
  * @createData 2024/3/30 16:43
  */
 @Slf4j
-public class ConsistentHashLoadBalancer implements LoadBalancer{
+public class ConsistentHashLoadBalancer implements LoadBalancer {
 
     /**
      * 一致性哈希环，存放虚拟节点

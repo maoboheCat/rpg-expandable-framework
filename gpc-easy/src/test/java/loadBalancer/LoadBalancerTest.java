@@ -1,12 +1,11 @@
 package loadBalancer;
 
-import cn.hutool.crypto.SecureUtil;
 import com.cola.rpc.loadbalancer.*;
+import com.cola.rpc.loadbalancer.impl.WeightRandomLoadBalancer;
 import com.cola.rpc.model.ServiceMetaInfo;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.HashMap;
