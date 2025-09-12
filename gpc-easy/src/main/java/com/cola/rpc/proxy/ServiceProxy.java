@@ -1,6 +1,7 @@
 package com.cola.rpc.proxy;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.IdUtil;
 import com.cola.rpc.RpcApplication;
 import com.cola.rpc.config.RpcConfig;
 import com.cola.rpc.constant.RpcConstant;
@@ -71,6 +72,7 @@ public class ServiceProxy implements InvocationHandler {
             // 将调用方法名作为负载均衡参数
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("methodName", rpcRequest.getMethodName());
+            requestParams.put("id", IdUtil.getSnowflakeNextId());
             ServiceMetaInfo selectedServiceMateInfo = loadBalancer.select(requestParams, serviceMateInfoList);
             // 发送TCP请求
             // 使用重试机制
