@@ -1,6 +1,7 @@
 package com.cola.rpc.registry;
 
 import com.cola.rpc.spi.SpiLoader;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 注册中心工厂（用于获取注册中心对象）
@@ -9,14 +10,11 @@ import com.cola.rpc.spi.SpiLoader;
  */
 public class RegistryFactory {
 
-    static {
-        SpiLoader.load(Registry.class);
-    }
 
     /**
      * 默认注册中心
      */
-    private static final Registry DEFAULT_REGISTRY = new EtcdRegistry();
+    private static final String DEFAULT_REGISTRY = RegistryKeys.ETCD;
 
     /**
      * 获取实例
@@ -24,6 +22,10 @@ public class RegistryFactory {
      * @return
      */
     public static Registry getInstance(String key) {
+        if (StringUtils.isBlank(key)) {
+            key = DEFAULT_REGISTRY;
+        }
+        key = StringUtils.lowerCase(key);
         return SpiLoader.getInstance(Registry.class, key);
     }
 }

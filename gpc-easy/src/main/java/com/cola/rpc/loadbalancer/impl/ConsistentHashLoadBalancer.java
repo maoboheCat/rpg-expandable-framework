@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +24,7 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
     /**
      * 一致性哈希环，存放虚拟节点
      */
-    private final ConcurrentHashMap<Integer, ServiceMetaInfo> virtualNodes = new ConcurrentHashMap<>();
+    private final ConcurrentSkipListMap<Integer, ServiceMetaInfo> virtualNodes = new ConcurrentSkipListMap<>();
 
     /**
      * 当前服务的哈希环版本号，用于判断是否需要更新
@@ -53,11 +54,10 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
             currentServiceHash = newServiceHash;
         }
         // 选择最接近大于等于调用请求hash 值的虚拟节点
-        TreeMap<Integer, ServiceMetaInfo> virtualNodesTemp = new TreeMap<>(virtualNodes);
-        Map.Entry<Integer, ServiceMetaInfo> entry = virtualNodesTemp.ceilingEntry(getHash(requestParams));
+        Map.Entry<Integer, ServiceMetaInfo> entry = virtualNodes.ceilingEntry(getHash(requestParams));
         if (entry == null) {
             // 如果没有大于等于调用请求Hash值的虚拟节点，则返回环首部的节点
-            entry = virtualNodesTemp.firstEntry();
+            entry = virtualNodes.firstEntry();
         }
         return entry.getValue();
     }

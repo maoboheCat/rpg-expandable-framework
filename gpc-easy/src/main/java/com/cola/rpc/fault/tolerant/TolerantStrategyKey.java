@@ -5,7 +5,7 @@ package com.cola.rpc.fault.tolerant;
  * @author Maobohe
  * @createData 2024/4/1 19:45
  */
-public interface TolerantStrategyJKey {
+public interface TolerantStrategyKey {
 
     /**
      * 快速失败

@@ -1,6 +1,7 @@
 package com.cola.rpc.fault.retry;
 
 import com.cola.rpc.spi.SpiLoader;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 重试机制工厂
@@ -9,16 +10,16 @@ import com.cola.rpc.spi.SpiLoader;
  */
 public class RetryStrategyFactory {
 
-    static {
-        SpiLoader.load(RetryStrategy.class);
-    }
-
     /**
      * 默认重试策略
      */
-    private static final RetryStrategy DEFAULT_RETRY_STRATEGY = new NoRetryStrategy();
+    private static final String DEFAULT_RETRY_STRATEGY = RetryStrategyKey.NO;
 
     public static RetryStrategy getInstance(String key) {
+        if (StringUtils.isBlank(key)) {
+            key = DEFAULT_RETRY_STRATEGY;
+        }
+        key = StringUtils.lowerCase(key);
         return SpiLoader.getInstance(RetryStrategy.class, key);
     }
 }

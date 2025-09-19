@@ -1,6 +1,7 @@
 package com.cola.rpc.fault.tolerant;
 
 import com.cola.rpc.spi.SpiLoader;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 容错策略工厂
@@ -9,16 +10,16 @@ import com.cola.rpc.spi.SpiLoader;
  */
 public class TolerantStrategyFactory {
 
-    static {
-        SpiLoader.load(TolerantStrategy.class);
-    }
-
     /**
      * 默认容错策略
      */
-    private static TolerantStrategy DEFAULT_TOLERANT_STRATEGY = new FailFastTolerantStrategy();
+    private static final String DEFAULT_TOLERANT_STRATEGY  = TolerantStrategyKey.FAIL_BACK;
 
     public static TolerantStrategy getInstance(String key) {
+        if (StringUtils.isBlank(key)) {
+            key = DEFAULT_TOLERANT_STRATEGY;
+        }
+        key = StringUtils.lowerCase(key);
         return SpiLoader.getInstance(TolerantStrategy.class, key);
     }
 }
