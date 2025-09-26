@@ -1,5 +1,6 @@
-package com.cola.rpc.fault.retry;
+package com.cola.rpc.fault.retry.impl;
 
+import com.cola.rpc.fault.retry.RetryStrategy;
 import com.cola.rpc.model.RpcResponse;
 import com.github.rholder.retry.*;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @createData 2024/3/31 17:02
  */
 @Slf4j
-public class FixedIntervalRetryStrategy implements RetryStrategy{
+public class FixedIntervalRetryStrategy implements RetryStrategy {
     @Override
     public RpcResponse doRetry(Callable<RpcResponse> callable) throws ExecutionException, RetryException {
         Retryer<RpcResponse> retryer = RetryerBuilder.<RpcResponse>newBuilder()

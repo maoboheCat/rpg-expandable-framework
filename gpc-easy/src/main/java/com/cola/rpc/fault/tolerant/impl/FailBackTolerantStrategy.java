@@ -1,7 +1,8 @@
-package com.cola.rpc.fault.tolerant;
+package com.cola.rpc.fault.tolerant.impl;
 
 import com.cola.rpc.exception.ErrorCode;
 import com.cola.rpc.exception.RpcException;
+import com.cola.rpc.fault.tolerant.TolerantStrategy;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.proxy.MockServiceProxy;
 import com.cola.rpc.proxy.ServiceProxyFactory;
@@ -16,7 +17,7 @@ import java.util.Map;
  * @createData 2024/4/1 19:56
  */
 @Slf4j
-public class FailBackTolerantStrategy implements TolerantStrategy{
+public class FailBackTolerantStrategy implements TolerantStrategy {
 
     @Override
     public RpcResponse doTolerant(Map<String, Object> context, Exception e) {

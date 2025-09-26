@@ -1,4 +1,4 @@
-package com.cola.rpc.protocol;
+package com.cola.rpc.protocol.enums;
 
 import lombok.Getter;
 

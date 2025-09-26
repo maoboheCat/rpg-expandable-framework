@@ -40,7 +40,6 @@ public class RoundRobinStateCache {
             if (atomicInteger.compareAndSet(current, next)) {
                 return current;
             }
-            // CAS 失败则重试
         }
     }
 

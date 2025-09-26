@@ -4,7 +4,6 @@ import com.cola.rpc.RpcApplication;
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
 import com.cola.rpc.registry.LocalRegistry;
-import com.cola.rpc.serializer.JdkSerializer;
 import com.cola.rpc.serializer.Serializer;
 import com.cola.rpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;

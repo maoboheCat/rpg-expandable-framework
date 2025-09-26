@@ -1,7 +1,8 @@
-package com.cola.rpc.serializer;
+package com.cola.rpc.serializer.impl;
 
 import com.cola.rpc.model.RpcRequest;
 import com.cola.rpc.model.RpcResponse;
+import com.cola.rpc.serializer.Serializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 

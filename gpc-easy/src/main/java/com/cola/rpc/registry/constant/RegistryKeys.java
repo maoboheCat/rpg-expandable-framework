@@ -1,4 +1,4 @@
-package com.cola.rpc.registry;
+package com.cola.rpc.registry.constant;
 
 /**
  * @author Maobohe

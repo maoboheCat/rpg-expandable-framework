@@ -1,4 +1,4 @@
-package com.cola.rpc.registry;
+package com.cola.rpc.registry.impl;
 
 import com.cola.rpc.model.ServiceMetaInfo;
 

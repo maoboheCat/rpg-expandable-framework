@@ -1,5 +1,6 @@
-package com.cola.rpc.serializer;
+package com.cola.rpc.serializer.impl;
 
+import com.cola.rpc.serializer.Serializer;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;

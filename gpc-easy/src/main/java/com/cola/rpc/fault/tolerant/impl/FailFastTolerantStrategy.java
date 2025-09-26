@@ -1,5 +1,6 @@
-package com.cola.rpc.fault.tolerant;
+package com.cola.rpc.fault.tolerant.impl;
 
+import com.cola.rpc.fault.tolerant.TolerantStrategy;
 import com.cola.rpc.model.RpcResponse;
 
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
  * @author Maobohe
  * @createData 2024/4/1 19:28
  */
-public class FailFastTolerantStrategy implements TolerantStrategy{
+public class FailFastTolerantStrategy implements TolerantStrategy {
 
     @Override
     public RpcResponse doTolerant(Map<String, Object> context, Exception e) {

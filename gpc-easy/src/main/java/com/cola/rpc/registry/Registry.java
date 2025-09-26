@@ -50,7 +50,8 @@ public interface Registry {
 
     /**
      * 监听（服务端）
+     * @param serviceKey
      * @param serviceNodeKey
      */
-    void watch(String serviceNodeKey);
+    void watch(String serviceKey, String serviceNodeKey);
 }

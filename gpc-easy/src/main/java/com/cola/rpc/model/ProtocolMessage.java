@@ -1,4 +1,4 @@
-package com.cola.rpc.protocol;
+package com.cola.rpc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

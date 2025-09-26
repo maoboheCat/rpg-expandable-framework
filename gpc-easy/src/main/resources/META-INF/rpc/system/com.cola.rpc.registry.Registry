@@ -1,2 +1,2 @@
-etcd=com.cola.rpc.registry.EtcdRegistry
-zookeeper=com.cola.rpc.registry.ZookeeperRegistry
+etcd=com.cola.rpc.registry.impl.EtcdRegistry
+zookeeper=com.cola.rpc.registry.impl.ZookeeperRegistry

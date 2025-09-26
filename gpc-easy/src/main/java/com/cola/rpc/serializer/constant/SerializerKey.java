@@ -1,4 +1,4 @@
-package com.cola.rpc.serializer;
+package com.cola.rpc.serializer.constant;
 
 /**
  * 序列化器键名

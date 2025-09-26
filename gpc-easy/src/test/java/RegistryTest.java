@@ -1,6 +1,6 @@
 import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.model.ServiceMetaInfo;
-import com.cola.rpc.registry.EtcdRegistry;
+import com.cola.rpc.registry.impl.EtcdRegistry;
 import com.cola.rpc.registry.Registry;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,9 +1,10 @@
-package com.cola.rpc.registry;
+package com.cola.rpc.registry.impl;
 
 import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.exception.ErrorCode;
 import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.ServiceMetaInfo;
+import com.cola.rpc.registry.Registry;
 import io.vertx.core.impl.ConcurrentHashSet;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -100,7 +101,7 @@ public class ZookeeperRegistry implements Registry {
     @Override
     public List<ServiceMetaInfo> serviceDiscovery(String serviceKey) {
         // 优先从缓存获取服务
-        List<ServiceMetaInfo> cachedServiceMateInfoList = registryServiceCache.readCache();
+        List<ServiceMetaInfo> cachedServiceMateInfoList = registryServiceCache.readCache(serviceKey);
         if (cachedServiceMateInfoList != null) {
             return cachedServiceMateInfoList;
         }
@@ -109,10 +110,14 @@ public class ZookeeperRegistry implements Registry {
             Collection<ServiceInstance<ServiceMetaInfo>> serviceInstanceList = serviceDiscovery.queryForInstances(serviceKey);
             // 解析服务信息
             List<ServiceMetaInfo> serviceMetaInfoList = serviceInstanceList.stream()
-                    .map(ServiceInstance::getPayload)
-                    .collect(Collectors.toList());
+                    .map(serviceInstance -> {
+                        ServiceMetaInfo serviceMetaInfo = serviceInstance.getPayload();
+                        // 监听key的变化
+                        watch(serviceKey, serviceMetaInfo.getServiceNodeKey());
+                        return serviceMetaInfo;
+                    }).collect(Collectors.toList());
             // 写入服务缓存
-            registryServiceCache.writeCache(serviceMetaInfoList);
+            registryServiceCache.writeCache(serviceKey, serviceMetaInfoList);
             return serviceMetaInfoList;
         } catch (Exception e) {
             throw new RpcException(ErrorCode.REGISTRY_DISCOVERY_ERROR, "获取服务列表失败 " + e);
@@ -141,7 +146,7 @@ public class ZookeeperRegistry implements Registry {
     }
 
     @Override
-    public void watch(String serviceNodeKey) {
+    public void watch(String serviceKey, String serviceNodeKey) {
         String watchKey = ZK_ROOT_PATH + "/" + serviceNodeKey;
         boolean newWatch = watchingKeySet.add(watchKey);
         if (newWatch) {
@@ -149,8 +154,8 @@ public class ZookeeperRegistry implements Registry {
             curatorCache.start();
             curatorCache.listenable().addListener(
                     CuratorCacheListener.builder()
-                            .forDeletes(childData -> registryServiceCache.clearCache())
-                            .forChanges(((oldNode, node) -> registryServiceCache.clearCache()))
+                            .forDeletes(childData -> registryServiceCache.clearCache(serviceKey))
+                            .forChanges(((oldNode, node) -> registryServiceCache.clearCache(serviceKey)))
                             .build()
             );
         }

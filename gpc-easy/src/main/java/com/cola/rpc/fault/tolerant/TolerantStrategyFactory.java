@@ -1,5 +1,6 @@
 package com.cola.rpc.fault.tolerant;
 
+import com.cola.rpc.fault.tolerant.constant.TolerantStrategyKey;
 import com.cola.rpc.spi.SpiLoader;
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,6 +1,6 @@
 package com.cola.rpc.server.tcp;
 
-import com.cola.rpc.protocol.ProtocolConstant;
+import com.cola.rpc.protocol.constant.ProtocolConstant;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.parsetools.RecordParser;

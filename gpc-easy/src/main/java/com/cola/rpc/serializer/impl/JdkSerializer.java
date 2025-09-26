@@ -1,4 +1,6 @@
-package com.cola.rpc.serializer;
+package com.cola.rpc.serializer.impl;
+
+import com.cola.rpc.serializer.Serializer;
 
 import java.io.*;
 
@@ -7,7 +9,7 @@ import java.io.*;
  * @author Maobohe
  * @createData 2024/3/18 21:09
  */
-public class JdkSerializer implements Serializer{
+public class JdkSerializer implements Serializer {
     @Override
     public <T> byte[] serialize(T object) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

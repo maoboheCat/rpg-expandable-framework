@@ -1,7 +1,6 @@
 package fault.retry;
 
-import com.cola.rpc.fault.retry.FixedIntervalRetryStrategy;
-import com.cola.rpc.fault.retry.NoRetryStrategy;
+import com.cola.rpc.fault.retry.impl.FixedIntervalRetryStrategy;
 import com.cola.rpc.fault.retry.RetryStrategy;
 import com.cola.rpc.model.RpcResponse;
 import org.junit.Test;

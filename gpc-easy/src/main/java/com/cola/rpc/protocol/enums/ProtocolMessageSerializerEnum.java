@@ -1,4 +1,4 @@
-package com.cola.rpc.protocol;
+package com.cola.rpc.protocol.enums;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.Getter;

@@ -1,10 +1,8 @@
 package com.cola.rpc.serializer;
 
+import com.cola.rpc.serializer.constant.SerializerKey;
 import com.cola.rpc.spi.SpiLoader;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 序列化器工厂

@@ -1,4 +1,4 @@
-package com.cola.rpc.registry;
+package com.cola.rpc.registry.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ConcurrentHashSet;
@@ -9,6 +9,7 @@ import com.cola.rpc.config.RegistryConfig;
 import com.cola.rpc.exception.ErrorCode;
 import com.cola.rpc.exception.RpcException;
 import com.cola.rpc.model.ServiceMetaInfo;
+import com.cola.rpc.registry.Registry;
 import io.etcd.jetcd.*;
 import io.etcd.jetcd.options.GetOption;
 import io.etcd.jetcd.options.PutOption;
@@ -19,7 +20,6 @@ import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import static com.cola.rpc.exception.ErrorCode.REGISTRY_DISCOVERY_ERROR;
@@ -107,7 +107,7 @@ public class EtcdRegistry implements Registry {
             List<ServiceMetaInfo> serviceMetaInfoList =  keyValues.stream().map(keyValue -> {
                 String key = keyValue.getKey().toString(StandardCharsets.UTF_8);
                 // 监听key的变化
-                watch(key);
+                watch(serviceKey, key);
                 String value = keyValue.getValue().toString(StandardCharsets.UTF_8);
                 return JSONUtil.toBean(value, ServiceMetaInfo.class);
             }).collect(Collectors.toList());
@@ -170,12 +170,12 @@ public class EtcdRegistry implements Registry {
     }
 
     @Override
-    public void watch(String serviceKey) {
+    public void watch(String serviceKey, String serviceModeKey) {
         Watch watchClient = client.getWatchClient();
         // 之前未被监听，开启监听
-        boolean newWatch = watchingKeySet.add(serviceKey);
+        boolean newWatch = watchingKeySet.add(serviceModeKey);
         if (newWatch) {
-            watchClient.watch(ByteSequence.from(serviceKey, StandardCharsets.UTF_8),
+            watchClient.watch(ByteSequence.from(serviceModeKey, StandardCharsets.UTF_8),
                     response -> {
                 for (WatchEvent event : response.getEvents()) {
                     switch (event.getEventType()) {

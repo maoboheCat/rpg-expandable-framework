@@ -1,4 +1,4 @@
-package com.cola.rpc.fault.tolerant;
+package com.cola.rpc.fault.tolerant.constant;
 
 /**
  * 容错策略键名常量

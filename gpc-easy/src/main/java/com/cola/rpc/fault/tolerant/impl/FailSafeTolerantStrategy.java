@@ -1,5 +1,6 @@
-package com.cola.rpc.fault.tolerant;
+package com.cola.rpc.fault.tolerant.impl;
 
+import com.cola.rpc.fault.tolerant.TolerantStrategy;
 import com.cola.rpc.model.RpcResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * @createData 2024/4/1 19:32
  */
 @Slf4j
-public class FailSafeTolerantStrategy implements TolerantStrategy{
+public class FailSafeTolerantStrategy implements TolerantStrategy {
 
     @Override
     public RpcResponse doTolerant(Map<String, Object> context, Exception e) {

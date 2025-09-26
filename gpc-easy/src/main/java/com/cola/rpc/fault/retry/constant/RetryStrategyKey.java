@@ -1,4 +1,4 @@
-package com.cola.rpc.fault.retry;
+package com.cola.rpc.fault.retry.constant;
 
 /**
  * 重试策略键值

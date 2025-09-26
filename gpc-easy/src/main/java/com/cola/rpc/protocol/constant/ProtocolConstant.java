@@ -1,4 +1,4 @@
-package com.cola.rpc.protocol;
+package com.cola.rpc.protocol.constant;
 
 /**
  * 协议常量
