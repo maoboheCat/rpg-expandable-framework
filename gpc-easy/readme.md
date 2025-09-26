@@ -58,9 +58,7 @@
 
 启动成功后，出现提示作为客户端运行
 
-![image-20250926185622617](C:\Users\cola\AppData\Roaming\Typora\typora-user-images\image-20250926185622617.png)
-
-
+![](https://pic1.imgdb.cn/item/68d6873dc5157e1a883862ce.png)
 
 ### ETCD中的存储
 
